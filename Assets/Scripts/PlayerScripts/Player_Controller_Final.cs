@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Player_Motor_Final))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -17,22 +18,29 @@ public class Player_Controller_Final : MonoBehaviour
 
 
     [Header("Attack1 CD")]
-    private float attack1NextFire = 0.0f;
-    public float attack1FireRate = 2f;
+    public float attack1CoolDownTimer;
+    public float attack1CoolDown = 2.5f;
     public float attack1Radius = 2f;
+    public float attack1ManaCost = 20f;
+    public Image attack1UIButton;
     [Header("Attack2 CD")]
-    private float attack2NextFire = 0.0f;
-    public float attack2FireRate = 4f;
+    public float attack2CoolDownTimer;
+    public float attack2CoolDown = 4f;
     public float attack2Radius = 4f;
+    public float attack2ManaCost = 40f;
+    public Image attack2UIButton;
     [Header("Attack3 CD")]
-    private float attack3NextFire = 0.0f;
-    public float attack3FireRate = 10f;
+    public float attack3CoolDownTimer;
+    public float attack3CoolDown = 8f;
+    public float attack3ManaCost = 40f;
+    public Image attack3UIButton;
 
     [Header("Misc")]
     public GameObject spell_FireBolt;
     public GameObject attack1Pos;
     public Collider[] hitObjects;
     public Camera cam;
+
 
     private void Start()
     {
@@ -42,8 +50,9 @@ public class Player_Controller_Final : MonoBehaviour
         cs = gameObject.GetComponent<CharacterStats>();        
     }
 
-    void Update()
+    void FixedUpdate()
     {
+
 
         if (cs.isControllable == true)
         {
@@ -77,33 +86,73 @@ public class Player_Controller_Final : MonoBehaviour
             }
 
             //Attack 1
-            if (Input.GetKey(KeyCode.Alpha1) && Time.time > attack1NextFire)
+            if (Input.GetKey(KeyCode.Alpha1) && attack1CoolDownTimer == 0)
             {
-                attack1NextFire = Time.time + attack1FireRate;
-                Attack1();
+                if(cs.currentPlayerMana > attack1ManaCost)
+                {
+                    Attack1();
+                    attack1CoolDownTimer = attack1CoolDown;
+                } else
+                {
+                    print("Not enough mana for attack 1!");
+                }
             }
 
             //Attack 2
-            if (Input.GetKey(KeyCode.Alpha2) && Time.time > attack2NextFire)
+            if (Input.GetKey(KeyCode.Alpha2) && attack2CoolDownTimer == 0)
             {
-                attack2NextFire = Time.time + attack2FireRate;
-                Attack2();
+                if (cs.currentPlayerMana > attack2ManaCost)
+                {
+                    Attack2();
+                    attack2CoolDownTimer = attack2CoolDown;
+                }
+                else
+                {
+                    print("Not enough mana for attack 2!");
+                }
             }
 
             //Attack 3
-            if (Input.GetKey(KeyCode.Alpha3) && Time.time > attack3NextFire)
+            if (Input.GetKey(KeyCode.Alpha3) && attack3CoolDownTimer == 0)
             {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit))
+                if(cs.currentPlayerMana > attack3ManaCost)
                 {
-                    attack3NextFire = Time.time + attack3FireRate;
-                    shootEnergyBolt(hit);
+                    Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        shootEnergyBolt(hit);
+                        attack3CoolDownTimer = attack3CoolDown;
+                    }
+                } else
+                {
+                    print("Not enough mana for attack 3!");
                 }
             }
-        } else
-        {
+
+
+
+            //Cooldown Timers :)
+            if (attack1CoolDownTimer > 0){
+                attack1UIButton.fillAmount = attack1CoolDownTimer / attack1CoolDown;
+                attack1CoolDownTimer -= Time.deltaTime;
+            }
+
+            if (attack2CoolDownTimer > 0){
+                attack2UIButton.fillAmount = attack2CoolDownTimer / attack2CoolDown;
+                attack2CoolDownTimer -= Time.deltaTime;
+            }
+
+            if (attack3CoolDownTimer > 0){
+                attack3UIButton.fillAmount = attack3CoolDownTimer / attack3CoolDown;
+                attack3CoolDownTimer -= Time.deltaTime;
+            }
+            if (attack1CoolDownTimer <= 0) { attack1CoolDownTimer = 0f; }
+            if (attack2CoolDownTimer <= 0) { attack2CoolDownTimer = 0f; }
+            if (attack3CoolDownTimer <= 0) { attack3CoolDownTimer = 0f; }
+
+        } else {
             //Do nothing
         }
     }
@@ -138,23 +187,15 @@ public class Player_Controller_Final : MonoBehaviour
     void shootEnergyBolt(RaycastHit hit)
     {
         EnergyBallSpell ebs = spell_FireBolt.GetComponent<EnergyBallSpell>();
-        float manaCost = 40;
         if (cs != null)
         {
-            if (cs.currentPlayerMana >= manaCost)
-            {
-                cs.DecreaseMana(manaCost); //Remove X amount of mana from the player
+                cs.DecreaseMana(attack3ManaCost); //Remove X amount of mana from the player
                 GameObject spellGo = (GameObject)Instantiate(spell_FireBolt, transform.position, transform.rotation);
                 EnergyBallSpell fb = spellGo.GetComponent<EnergyBallSpell>();
 
                 if (fb != null)
                 {
                     fb.Seek(hit.point);
-                }
-            }
-            else
-            {
-                print("Not enough mana");
             }
         }
         else
@@ -165,21 +206,13 @@ public class Player_Controller_Final : MonoBehaviour
 
     public void Attack1()
     {
-        float manaCost = 10f;
         if (cs != null)
         {
-            if (cs.currentPlayerMana >= manaCost)
-            {
                 anim.SetTrigger("attack1");
-                cs.DecreaseMana(manaCost); //Remove X amount of mana from the player
+                cs.DecreaseMana(attack1ManaCost); //Remove X amount of mana from the player
                 agent.SetDestination(gameObject.transform.position); //Set actors destination to it's current destination (to stop it)
                 hitObjects = Physics.OverlapSphere(attack1Pos.transform.position, attack1Radius);
                 StartCoroutine("att1");
-            }
-            else
-            {
-                print("Not enough mana");
-            }
         }
         else
         {
@@ -192,18 +225,11 @@ public class Player_Controller_Final : MonoBehaviour
         float manaCost = 20f;
         if (cs != null)
         {
-            if (cs.currentPlayerMana >= manaCost)
-            {
                 anim.SetTrigger("attack2");
-                cs.DecreaseMana(manaCost); //Remove X amount of mana from the player
+                cs.DecreaseMana(attack2ManaCost); //Remove X amount of mana from the player
                 agent.SetDestination(gameObject.transform.position); //Set actors destination to it's current destination (to stop it)
                 hitObjects = Physics.OverlapSphere(transform.position, attack2Radius);
                 StartCoroutine("att2");
-            }
-            else
-            {
-                print("Not enough mana");
-            }
         }
         else
         {

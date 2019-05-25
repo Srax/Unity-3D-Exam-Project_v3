@@ -33,7 +33,7 @@ public class CharacterStats : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("RegenerateMana", 0.0f, (1.0f/manaRegenSpeed)); //Regenerate mana all the time
+        InvokeRepeating("RegenerateMana", 0.0f, (1.0f / manaRegenSpeed)); //Regenerate mana all the time
         currentPlayerHealth = maxPlayerHealth;
         currentPlayerMana = maxPlayerMana;
         anim = GetComponent<Animator>();
@@ -45,11 +45,11 @@ public class CharacterStats : MonoBehaviour
 
     private void Update()
     {
-        if(enableCheats == true)
+        if (enableCheats == true)
         {
-            if (Input.GetKeyDown("b")) {TakeDamage(20f);}
-            if (Input.GetKeyDown("n")) {DecreaseMana(20f);}
-            if (Input.GetKeyDown("m")) {UpdateExp(50f);}
+            if (Input.GetKeyDown("b")) { TakeDamage(20f); }
+            if (Input.GetKeyDown("n")) { DecreaseMana(20f); }
+            if (Input.GetKeyDown("m")) { UpdateExp(50f); }
         }
 
 
@@ -62,7 +62,7 @@ public class CharacterStats : MonoBehaviour
     {
         currentPlayerHealth -= amount; //Reduce current health by damage taken        
         healthBar.fillAmount = currentPlayerHealth / maxPlayerHealth; //Change the healthBar's fill amount
-        if (currentPlayerHealth <= 0 && !isDead) {Die();} //Die
+        if (currentPlayerHealth <= 0 && !isDead) { Die(); } //Die
     }
 
     void Die()
@@ -91,8 +91,8 @@ public class CharacterStats : MonoBehaviour
     public void UpdateExp(float amount)
     {
         exp += amount;
-        expBar.fillAmount = exp / maxPlayerExp;
-        if (exp >= maxPlayerExp){LevelUp();}
+        expBar.fillAmount = exp / maxPlayerExp; //Change the expBar's fill amoubt
+        if (exp >= maxPlayerExp) { LevelUp(); }
     }
 
     void LevelUp()
