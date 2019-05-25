@@ -29,6 +29,7 @@ public class CharacterStats : MonoBehaviour
     public Image manaBar;
     public bool isDead = false;
     public bool isControllable = true;
+    public bool enableCheats = false;
 
     void Start()
     {
@@ -44,7 +45,12 @@ public class CharacterStats : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("b")){TakeDamage(100); UpdateExp(20); DecreaseMana(50); }
+        if(enableCheats == true)
+        {
+            if (Input.GetKeyDown("b")) {TakeDamage(20f);}
+            if (Input.GetKeyDown("n")) {DecreaseMana(20f);}
+            if (Input.GetKeyDown("m")) {UpdateExp(50f);}
+        }
 
 
         if (currentPlayerMana > maxPlayerMana) { currentPlayerMana = maxPlayerMana; } //Players mana can't be larger than the max allowed mana

@@ -87,6 +87,7 @@ public class EnemyAIScript : MonoBehaviour
     {
         isAttacking = true;
         anim.SetTrigger("Attack");
+        yield return new WaitForSeconds(0.75f);
         player.GetComponent<CharacterStats>().TakeDamage(enemSkeleStat.attackDamage);
         yield return new WaitForSeconds(10 / attackSpeed);
         isAttacking = false;
