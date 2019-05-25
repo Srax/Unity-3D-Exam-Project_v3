@@ -10,6 +10,7 @@ public class EnemySkeletonStats : MonoBehaviour
     public float attackDamage = 10f;
     public float amountExp;
     public Image healthBar;
+    public GameObject healthBarCanvas;
 
     public bool isDead = false;
     public bool canControl = true;
@@ -40,6 +41,8 @@ public class EnemySkeletonStats : MonoBehaviour
     {
         isDead = true;
         canControl = false;
+        healthBarCanvas.SetActive(false);
         anim.SetTrigger("Die");
+        Destroy(gameObject, 15f);
     }
 }

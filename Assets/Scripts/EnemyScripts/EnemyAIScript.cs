@@ -32,28 +32,55 @@ public class EnemyAIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(enemSkeleStat.canControl == true)
+        if (enemSkeleStat.canControl == true)
         {
+            if (!agent.pathPending)
+            {
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                    {
+                        anim.SetBool("Walk", false); //If the player is standing still, stop "moving".
+                    }
+                }
+                else
+                {
+                    anim.SetBool("Walk", true);
+                }
+            }
+
+
             float dist = Vector3.Distance(player.transform.position, transform.position);
             if (dist <= attackRange) //If player is in attack range, attack
             {
-                agent.SetDestination(transform.position);
+                MoveToPoint(transform.position);
                 if (!isAttacking)
                 {
                     StartCoroutine(attack(attackSpeed));
                 }
-            } else if(dist <= detectRange) //Else if the player is outside of attack range but inside of the detection range, move towards the player
+            }
+            else if (dist <= detectRange) //Else if the player is outside of attack range but inside of the detection range, move towards the player
             {
-                agent.SetDestination(player.transform.position);
-            } else //If the player is no longer inside of the attack -or detection range, move back to the start position.
+                MoveToPoint(player.transform.position);
+            }
+            else //If the player is no longer inside of the attack -or detection range, move back to the start position.
             {
-                agent.SetDestination(startPos);
+                MoveToPoint(startPos);
             }
 
-        } else
-        {
-            //The enemy is dead
         }
+        else
+        {
+            if(enemSkeleStat.isDead == true)
+            {
+                MoveToPoint(transform.position);
+            }
+        }
+    }
+
+    public void MoveToPoint(Vector3 point)
+    {
+        agent.SetDestination(point);
     }
 
     public IEnumerator attack(float attSpeed)
@@ -61,7 +88,7 @@ public class EnemyAIScript : MonoBehaviour
         isAttacking = true;
         anim.SetTrigger("Attack");
         player.GetComponent<CharacterStats>().TakeDamage(enemSkeleStat.attackDamage);
-        yield return new WaitForSeconds(attackSpeed);
+        yield return new WaitForSeconds(10 / attackSpeed);
         isAttacking = false;
     }
 }
