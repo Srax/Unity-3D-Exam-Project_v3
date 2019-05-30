@@ -14,6 +14,8 @@ public class GameMasterScript : MonoBehaviour
     public GameObject mainCanvas;
     public TextMeshProUGUI levelText;
 
+    [Header("Active Quest")]
+    public Quest quest;
 
     // Start is called before the first frame update
     void Awake()
@@ -22,29 +24,33 @@ public class GameMasterScript : MonoBehaviour
         pauseCanvas.SetActive(false);
         mainCanvas.SetActive(true);
         Time.timeScale = 1f;
+        PlayerPrefs.SetInt("questIndex", 0);
     }
 
     // Update is called once per frame
     void Update()
     {
         levelText.SetText(player.GetComponent<CharacterStats>().level.ToString());
-        if(player.GetComponent<CharacterStats>().isDead == false)
+        //If the player is alive, do this
+        if (player.GetComponent<CharacterStats>().isDead == false)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            TogglePauseMenu();  
+            if(Input.GetKeyDown(KeyCode.P))
             {
-                gameIsPaused = gameIsPaused ? false : true;
-                if (gameIsPaused == true)
+                if(quest.isActive)
                 {
-                    pauseCanvas.SetActive(true);
-                    Time.timeScale = 0.1f;
-                }
-                else
-                {
-                    pauseCanvas.SetActive(false);
-                    Time.timeScale = 1f;
+                    quest.goal.EnemyKilled();
+                    if(quest.goal.isReached())
+                    {
+                        player.GetComponent<CharacterStats>().AddExp(quest.expReward);
+                        quest.Complete();
+                    }
                 }
             }
-        } else {
+        }
+
+        //Else, if the player is dead, do this
+        else {
             PlayerIsDead();
         }
 
@@ -52,7 +58,25 @@ public class GameMasterScript : MonoBehaviour
         {
             deathCanvas.SetActive(true);
             pauseCanvas.SetActive(false);
-            Time.timeScale = 0.1f;
+            Time.timeScale = 0.1f; //Slow time to 1/10 of normal time.
+        }
+
+        void TogglePauseMenu()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                gameIsPaused = gameIsPaused ? false : true;
+                if (gameIsPaused == true)
+                {
+                    pauseCanvas.SetActive(true);
+                    Time.timeScale = 0.1f; //Slow time to 1/10 of normal time.
+                }
+                else
+                {
+                    pauseCanvas.SetActive(false);
+                    Time.timeScale = 1f; //Set time back to normal (1)
+                }
+            }
         }
     }
 }

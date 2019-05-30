@@ -7,12 +7,14 @@ public class CharacterStats : MonoBehaviour
     public float currentPlayerHealth;
     public float currentPlayerMana;
 
-    private float maxPlayerHealth = 300;
-    private float maxPlayerMana = 100f;
+    public float maxPlayerHealth = 300;
+    public float maxPlayerMana = 100f;
     private float maxPlayerExp = 100f;
 
     public float playerMeleeDamage = 25f;
     public float playerSpellDamage = 20f;
+
+    public ParticleSystem levelUpParticles;
 
     [Header("STATS")]
     public float exp = 0;
@@ -49,20 +51,13 @@ public class CharacterStats : MonoBehaviour
         {
             if (Input.GetKeyDown("b")) { TakeDamage(20f); }
             if (Input.GetKeyDown("n")) { DecreaseMana(20f); }
-            if (Input.GetKeyDown("m")) { UpdateExp(50f); }
+            if (Input.GetKeyDown("m")) { AddExp(50f); }
         }
 
 
         if (currentPlayerMana > maxPlayerMana) { currentPlayerMana = maxPlayerMana; } //Players mana can't be larger than the max allowed mana
         if (currentPlayerHealth > maxPlayerHealth) { currentPlayerHealth = maxPlayerHealth; } //Same as the above, but for health instead of mana
         if (currentPlayerMana < 0) { currentPlayerMana = 0f; } //Player mana can't get below 0
-    }
-
-    public void TakeDamage(float amount)
-    {
-        currentPlayerHealth -= amount; //Reduce current health by damage taken        
-        healthBar.fillAmount = currentPlayerHealth / maxPlayerHealth; //Change the healthBar's fill amount
-        if (currentPlayerHealth <= 0 && !isDead) { Die(); } //Die
     }
 
     void Die()
@@ -81,14 +76,33 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float amount)
+    {
+        currentPlayerHealth -= amount; //Reduce current health by damage taken        
+        healthBar.fillAmount = currentPlayerHealth / maxPlayerHealth; //Change the healthBar's fill amount
+        if (currentPlayerHealth <= 0 && !isDead) { Die(); } //Die
+    }
+
     public void DecreaseMana(float amount)
     {
         currentPlayerMana -= amount;
         manaBar.fillAmount = currentPlayerMana / maxPlayerMana; //Change the manaBar's fill amount
     }
 
+    public void AddHealth(float amount)
+    {
+        currentPlayerHealth += amount;
+        healthBar.fillAmount = currentPlayerHealth / maxPlayerHealth; //Change the manaBar's fill amount
+    }
 
-    public void UpdateExp(float amount)
+    public void AddMana(float amount)
+    {
+        currentPlayerMana += amount;
+        manaBar.fillAmount = currentPlayerMana / maxPlayerMana; //Change the manaBar's fill amount
+    }
+
+
+    public void AddExp(float amount)
     {
         exp += amount;
         expBar.fillAmount = exp / maxPlayerExp; //Change the expBar's fill amoubt
@@ -103,6 +117,8 @@ public class CharacterStats : MonoBehaviour
         strength += 1;
         manaRegenSpeed += 0.5f;
         exp = 0; //Reset EXP
+
+        levelUpParticles.Play();
 
         maxPlayerHealth += (vitality * 10);
         maxPlayerMana += (intellect * 10);

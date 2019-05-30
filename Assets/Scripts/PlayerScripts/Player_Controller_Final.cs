@@ -35,6 +35,18 @@ public class Player_Controller_Final : MonoBehaviour
     public float attack3ManaCost = 40f;
     public Image attack3UIButton;
 
+    [Header("Health Potion CD")]
+    public float healthPotionCoolDownTimer;
+    public float healthPotionCoolDown = 2.5f;
+    public float healAmount = 100f;
+    public Image healthPotionUIButton;
+
+    [Header("Mana Potion CD")]
+    public float manaPotionCoolDownTimer;
+    public float manaPotionCoolDown = 2.5f;
+    public float manaAmount = 100f;
+    public Image manaPotionUIButton;
+
     [Header("Misc")]
     public GameObject spell_FireBolt;
     public GameObject attack1Pos;
@@ -131,6 +143,34 @@ public class Player_Controller_Final : MonoBehaviour
                 }
             }
 
+            //Use Health Potion
+            if (Input.GetKeyDown(KeyCode.Alpha4) && healthPotionCoolDownTimer == 0)
+            {
+                if (cs.currentPlayerHealth < cs.maxPlayerHealth)
+                {
+                    cs.AddHealth(healAmount);
+                    healthPotionCoolDownTimer = healthPotionCoolDown;
+                }
+                else
+                {
+                    print("You are already full on health.");
+                }
+            }
+
+            //Use Mana Potion
+            if (Input.GetKeyDown(KeyCode.Alpha5) && manaPotionCoolDownTimer == 0)
+            {
+                if (cs.currentPlayerMana < cs.maxPlayerMana)
+                {
+                    cs.AddMana(manaAmount);
+                    manaPotionCoolDownTimer = healthPotionCoolDown;
+                }
+                else
+                {
+                    print("You are already full on health.");
+                }
+            }
+
 
 
             //Cooldown Timers :)
@@ -148,9 +188,24 @@ public class Player_Controller_Final : MonoBehaviour
                 attack3UIButton.fillAmount = attack3CoolDownTimer / attack3CoolDown;
                 attack3CoolDownTimer -= Time.deltaTime;
             }
+
+            if (healthPotionCoolDownTimer > 0)
+            {
+                healthPotionUIButton.fillAmount = healthPotionCoolDownTimer / healthPotionCoolDown;
+                healthPotionCoolDownTimer -= Time.deltaTime;
+            }
+
+            if (manaPotionCoolDownTimer > 0)
+            {
+                manaPotionUIButton.fillAmount = manaPotionCoolDownTimer / manaPotionCoolDown;
+                manaPotionCoolDownTimer -= Time.deltaTime;
+            }
+
             if (attack1CoolDownTimer <= 0) { attack1CoolDownTimer = 0f; }
             if (attack2CoolDownTimer <= 0) { attack2CoolDownTimer = 0f; }
             if (attack3CoolDownTimer <= 0) { attack3CoolDownTimer = 0f; }
+            if (healthPotionCoolDownTimer <= 0) { healthPotionCoolDownTimer = 0f; }
+            if (manaPotionCoolDownTimer <= 0) { manaPotionCoolDownTimer = 0f; }
 
         } else {
             //Do nothing
@@ -222,7 +277,6 @@ public class Player_Controller_Final : MonoBehaviour
 
     public void Attack2()
     {
-        float manaCost = 20f;
         if (cs != null)
         {
                 anim.SetTrigger("attack2");
@@ -252,7 +306,7 @@ public class Player_Controller_Final : MonoBehaviour
 
                     if (enemSkeletonStats.isDead == true)
                     {
-                        cs.UpdateExp(enemSkeletonStats.amountExp);
+                        cs.AddExp(enemSkeletonStats.amountExp);
                     }
 
                 }
@@ -273,7 +327,7 @@ public class Player_Controller_Final : MonoBehaviour
                     enemSkeletonStats.TakeDamage(cs.playerMeleeDamage * 1.5f);
                     if (enemSkeletonStats.isDead == true)
                     {
-                        cs.UpdateExp(enemSkeletonStats.amountExp);
+                        cs.AddExp(enemSkeletonStats.amountExp);
                     }
                 }
             }
