@@ -13,12 +13,14 @@ public class QuestGoal
         return (currentAmount >= requiredAmount); //If the currentAmount is equal to or higer than requiredAmount, return "true", else return "false".
     }
 
+    //Enemy Killed
     public void EnemyKilled()
     {
         if(goalType == GoalType.Kill)
             currentAmount++;
     }
 
+    //Any item collected
     public void ItemCollected()
     {
         if (goalType == GoalType.Gather)

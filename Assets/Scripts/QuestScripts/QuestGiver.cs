@@ -11,6 +11,7 @@ public class QuestGiver : MonoBehaviour
     public Text titleText;
     public Text descriptionText;
     public Text expText;
+    public Text progressText;
 
     private Quest quest;
     public List<Quest> questList;
@@ -50,6 +51,16 @@ public class QuestGiver : MonoBehaviour
         titleText.text = quest.title;
         descriptionText.text = quest.description;
         expText.text = "Exp:" + quest.expReward.ToString();
+
+        if(quest.goal.goalType == GoalType.Kill)
+        {
+            progressText.text = "Killed " + quest.goal.currentAmount + " of " + quest.goal.requiredAmount;
+        }
+
+        if(quest.goal.goalType == GoalType.Gather)
+        {
+            progressText.text = "Collected " + quest.goal.currentAmount + " of " + quest.goal.requiredAmount;
+        }
     }
 
     public void SetActiveQuest(int num)

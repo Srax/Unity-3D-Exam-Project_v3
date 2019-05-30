@@ -1,24 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class GameMasterScript : MonoBehaviour
 {
     public bool gameIsPaused = false;
     public GameObject player;
+    public GameObject enemies;
 
     [Header("Canvases")]
     public GameObject deathCanvas;
     public GameObject pauseCanvas;
     public GameObject mainCanvas;
-    public TextMeshProUGUI levelText;
 
     [Header("Active Quest")]
     public Quest quest;
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         deathCanvas.SetActive(false);
         pauseCanvas.SetActive(false);
@@ -30,21 +29,17 @@ public class GameMasterScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        levelText.SetText(player.GetComponent<CharacterStats>().level.ToString());
         //If the player is alive, do this
         if (player.GetComponent<CharacterStats>().isDead == false)
         {
-            TogglePauseMenu();  
-            if(Input.GetKeyDown(KeyCode.P))
+            TogglePauseMenu();
+
+            if (quest.isActive)
             {
-                if(quest.isActive)
+                if (quest.goal.isReached())
                 {
-                    quest.goal.EnemyKilled();
-                    if(quest.goal.isReached())
-                    {
-                        player.GetComponent<CharacterStats>().AddExp(quest.expReward);
-                        quest.Complete();
-                    }
+                    player.GetComponent<CharacterStats>().AddExp(quest.expReward);
+                    quest.Complete();
                 }
             }
         }

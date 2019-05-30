@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class EnemySkeletonStats : MonoBehaviour
 {
+
+    public GameObject gm;
+
     private float startEnemyHealth;
     public float currentEnemyHealth = 100f;
     public float attackDamage = 10f;
@@ -22,11 +25,7 @@ public class EnemySkeletonStats : MonoBehaviour
         startEnemyHealth = currentEnemyHealth;
         anim = GetComponent<Animator>();
         canControl = true;
-    }
-
-    private void Update()
-    {
-
+        gm = GameObject.FindGameObjectWithTag("GameMaster");
     }
 
     public void TakeDamage(float amount)
@@ -43,6 +42,7 @@ public class EnemySkeletonStats : MonoBehaviour
         canControl = false;
         healthBarCanvas.SetActive(false);
         anim.SetTrigger("Die");
+        gm.GetComponent<GameMasterScript>().quest.goal.EnemyKilled();
         Destroy(gameObject, 15f);
     }
 }

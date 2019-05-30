@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CharacterStats : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class CharacterStats : MonoBehaviour
     public Image healthBar;
     public Image expBar;
     public Image manaBar;
+    public TextMeshProUGUI levelText;
     public bool isDead = false;
     public bool isControllable = true;
     public bool enableCheats = false;
@@ -42,6 +44,7 @@ public class CharacterStats : MonoBehaviour
         healthBar.fillAmount = currentPlayerHealth / maxPlayerHealth;
         manaBar.fillAmount = currentPlayerMana / maxPlayerMana;
         expBar.fillAmount = exp / maxPlayerExp;
+        levelText.SetText(level.ToString());
         isControllable = true;
     }
 
@@ -111,6 +114,7 @@ public class CharacterStats : MonoBehaviour
 
     void LevelUp()
     {
+        //Increase stats on levelup
         level += 1;
         vitality += 1;
         intellect += 1;
@@ -118,8 +122,7 @@ public class CharacterStats : MonoBehaviour
         manaRegenSpeed += 0.5f;
         exp = 0; //Reset EXP
 
-        levelUpParticles.Play();
-
+        //Add stats to health, mana and damage
         maxPlayerHealth += (vitality * 10);
         maxPlayerMana += (intellect * 10);
         maxPlayerExp += 50f;
@@ -128,6 +131,9 @@ public class CharacterStats : MonoBehaviour
 
         currentPlayerHealth = maxPlayerHealth; //Give the player full health
         currentPlayerMana = maxPlayerMana; //Give the player full mana
+
+        //Update UI Lvl with new level.
+        levelText.SetText(level.ToString());
 
         //Reset the mana, health and exp bar
         expBar.fillAmount = 0f;

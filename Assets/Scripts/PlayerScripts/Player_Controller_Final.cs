@@ -15,6 +15,7 @@ public class Player_Controller_Final : MonoBehaviour
     NavMeshAgent agent;                 //Reference to our navmesh agent
 
     CharacterStats cs;
+    public GameMasterScript gm;
 
 
     [Header("Attack1 CD")]
@@ -53,19 +54,16 @@ public class Player_Controller_Final : MonoBehaviour
     public Collider[] hitObjects;
     public Camera cam;
 
-
     private void Start()
     {
         motor = GetComponent<Player_Motor_Final>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        cs = gameObject.GetComponent<CharacterStats>();        
+        cs = gameObject.GetComponent<CharacterStats>();
     }
 
     void FixedUpdate()
     {
-
-
         if (cs.isControllable == true)
         {
             //If leftclick, move
@@ -163,11 +161,11 @@ public class Player_Controller_Final : MonoBehaviour
                 if (cs.currentPlayerMana < cs.maxPlayerMana)
                 {
                     cs.AddMana(manaAmount);
-                    manaPotionCoolDownTimer = healthPotionCoolDown;
+                    manaPotionCoolDownTimer = manaPotionCoolDown;
                 }
                 else
                 {
-                    print("You are already full on health.");
+                    print("You are already full on mana.");
                 }
             }
 
