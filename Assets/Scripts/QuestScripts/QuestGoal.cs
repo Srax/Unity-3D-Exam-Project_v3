@@ -26,6 +26,12 @@ public class QuestGoal
             currentAmount++;
     }
 
+    public void BossChestInteracted()
+    {
+        if (goalType == GoalType.Gather)
+            currentAmount++;
+    }
+
     //Any item collected
     public void ItemCollected()
     {
@@ -41,5 +47,6 @@ public enum GoalType
     BossKill,
     Gather,
     Escort,
-    MoveTo
+    MoveTo,
+    Blank
 }

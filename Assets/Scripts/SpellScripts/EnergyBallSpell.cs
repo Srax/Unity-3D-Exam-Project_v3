@@ -65,10 +65,6 @@ public class EnergyBallSpell : MonoBehaviour
                 if(enemSkeletonStats != null) //If the enemy have the script
                 {
                     enemSkeletonStats.TakeDamage(player.GetComponent<CharacterStats>().playerSpellDamage * 2);
-                    if (enemSkeletonStats.isDead == true)
-                    {
-                        //player.GetComponent<CharacterStats>().UpdateExp(10f);
-                    }
                 }
             }
 
@@ -78,10 +74,6 @@ public class EnergyBallSpell : MonoBehaviour
                 if (enemBossStats != null) //If the enemy have the script
                 {
                     enemBossStats.TakeDamage(player.GetComponent<CharacterStats>().playerSpellDamage * 1);
-                    if (enemBossStats.isDead == true)
-                    {
-                        //player.GetComponent<CharacterStats>().UpdateExp(10f);
-                    }
                 }
             }
 

@@ -28,10 +28,22 @@ public class BossAIScript : MonoBehaviour
         enemBossStats = GetComponent<EnemyBossStats>();
         anim = GetComponent<Animator>();
         startPos = transform.position;
+
+        InvokeRepeating("DetectAndChasePlayer", 0.5f, 1f);  //Run "DetectAndChasePlayer" function every 1 second.
     }
 
     // Update is called once per frame
     void Update()
+    {
+        {
+            if(enemBossStats.isDead == true)
+            {
+                MoveToPoint(transform.position);
+            }
+        }
+    }
+
+    void DetectAndChasePlayer()
     {
         if (enemBossStats.canControl == true)
         {
@@ -69,13 +81,6 @@ public class BossAIScript : MonoBehaviour
                 MoveToPoint(startPos);
             }
 
-        }
-        else
-        {
-            if(enemBossStats.isDead == true)
-            {
-                MoveToPoint(transform.position);
-            }
         }
     }
 

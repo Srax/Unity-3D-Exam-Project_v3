@@ -301,12 +301,6 @@ public class Player_Controller_Final : MonoBehaviour
                 if (enemSkeletonStats != null) //If the enemy have the script
                 {
                    enemSkeletonStats.TakeDamage(cs.playerMeleeDamage);
-
-                    if (enemSkeletonStats.isDead == true)
-                    {
-                        cs.AddExp(enemSkeletonStats.amountExp);
-                    }
-
                 }
             }
 
@@ -316,12 +310,6 @@ public class Player_Controller_Final : MonoBehaviour
                 if (enemBossStats != null) //If the enemy have the script
                 {
                     enemBossStats.TakeDamage(cs.playerMeleeDamage);
-
-                    if (enemBossStats.isDead == true)
-                    {
-                        cs.AddExp(enemBossStats.amountExp);
-                    }
-
                 }
             }
         }
@@ -338,12 +326,6 @@ public class Player_Controller_Final : MonoBehaviour
                 if (enemSkeletonStats != null) //If the enemy have the script
                 {
                     enemSkeletonStats.TakeDamage(cs.playerMeleeDamage * 1.5f);
-
-                    if (enemSkeletonStats.isDead == true)
-                    {
-                        cs.AddExp(enemSkeletonStats.amountExp);
-                    }
-
                 }
             }
 
@@ -353,12 +335,6 @@ public class Player_Controller_Final : MonoBehaviour
                 if (enemBossStats != null) //If the enemy have the script
                 {
                     enemBossStats.TakeDamage(cs.playerMeleeDamage * 1.5f);
-
-                    if (enemBossStats.isDead == true)
-                    {
-                        cs.AddExp(enemBossStats.amountExp);
-                    }
-
                 }
             }
         }

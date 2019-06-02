@@ -74,14 +74,19 @@ public class QuestGiver : MonoBehaviour
         descriptionText.text = quest.description;
         expText.text = "Exp:" + quest.expReward.ToString();
 
-        if(quest.goal.goalType == GoalType.Kill)
+        if(quest.goal.goalType == GoalType.Kill || quest.goal.goalType == GoalType.BossKill)
         {
             progressText.text = "Killed " + quest.goal.currentAmount + " of " + quest.goal.requiredAmount;
         }
 
-        if(quest.goal.goalType == GoalType.Gather)
+        if (quest.goal.goalType == GoalType.Gather)
         {
             progressText.text = "Collected " + quest.goal.currentAmount + " of " + quest.goal.requiredAmount;
+        }
+
+        if (quest.goal.goalType == GoalType.Blank)
+        {
+            progressText.text = "";
         }
     }
 

@@ -43,6 +43,7 @@ public class EnemySkeletonStats : MonoBehaviour
         healthBarCanvas.SetActive(false);
         anim.SetTrigger("Die");
         gm.GetComponent<GameMasterScript>().quest.goal.EnemyKilled();
+        gm.GetComponent<GameMasterScript>().player.GetComponent<CharacterStats>().AddExp(amountExp);
         Destroy(gameObject, 15f);
     }
 }

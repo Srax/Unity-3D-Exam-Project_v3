@@ -780,7 +780,7 @@ MonoBehaviour:
   gm: {fileID: 0}
   currentEnemyHealth: 100
   attackDamage: 10
-  amountExp: 10
+  amountExp: 125
   healthBar: {fileID: 3153351500118364324}
   healthBarCanvas: {fileID: 2168809648887853193}
   isDead: 0

@@ -42,7 +42,7 @@ public class EnemyBossStats : MonoBehaviour
         canControl = false; //Enemy can no longer control
         healthBarCanvas.SetActive(false); //Deactivate HealthCanvas
         anim.SetTrigger("Die"); //Play death animation.
+        gm.GetComponent<GameMasterScript>().player.GetComponent<CharacterStats>().AddExp(amountExp); //Give the player exp
         gm.GetComponent<GameMasterScript>().quest.goal.BossKilled(); //Complete BossKill quest
-        Destroy(gameObject, 5f); //Destroy Phanos after 15 seconds.
     }
 }

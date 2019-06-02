@@ -27,10 +27,20 @@ public class EnemyAIScript : MonoBehaviour
         enemSkeleStat = GetComponent<EnemySkeletonStats>();
         anim = GetComponent<Animator>();
         startPos = transform.position;
+
+        InvokeRepeating("DetectAndChasePlayer", 0.5f, 1f); //Run "DetectAndChasePlayer" function every 1 second.
     }
 
     // Update is called once per frame
     void Update()
+    {
+       if(enemSkeleStat.isDead == true)
+       {
+            MoveToPoint(transform.position);
+       }
+    }
+
+    public void DetectAndChasePlayer()
     {
         if (enemSkeleStat.canControl == true)
         {
@@ -68,13 +78,6 @@ public class EnemyAIScript : MonoBehaviour
                 MoveToPoint(startPos);
             }
 
-        }
-        else
-        {
-            if(enemSkeleStat.isDead == true)
-            {
-                MoveToPoint(transform.position);
-            }
         }
     }
 
