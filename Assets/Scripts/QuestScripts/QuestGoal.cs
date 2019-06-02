@@ -20,6 +20,12 @@ public class QuestGoal
             currentAmount++;
     }
 
+    public void BossKilled()
+    {
+        if (goalType == GoalType.BossKill)
+            currentAmount++;
+    }
+
     //Any item collected
     public void ItemCollected()
     {
@@ -32,6 +38,7 @@ public class QuestGoal
 public enum GoalType
 {
     Kill,
+    BossKill,
     Gather,
     Escort,
     MoveTo

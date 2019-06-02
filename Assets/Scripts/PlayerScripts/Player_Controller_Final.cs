@@ -309,24 +309,56 @@ public class Player_Controller_Final : MonoBehaviour
 
                 }
             }
+
+            if (enemy.tag == "Boss")
+            {
+                EnemyBossStats enemBossStats = enemy.GetComponent<EnemyBossStats>();
+                if (enemBossStats != null) //If the enemy have the script
+                {
+                    enemBossStats.TakeDamage(cs.playerMeleeDamage);
+
+                    if (enemBossStats.isDead == true)
+                    {
+                        cs.AddExp(enemBossStats.amountExp);
+                    }
+
+                }
+            }
         }
     }
 
     public IEnumerator att2()
     {
         yield return new WaitForSeconds(1f);
-        foreach (Collider collider in hitObjects)
+        foreach (Collider enemy in hitObjects)
         {
-            if (collider.tag == "Enemy")
+            if (enemy.tag == "Enemy")
             {
-                EnemySkeletonStats enemSkeletonStats = collider.GetComponent<EnemySkeletonStats>();
+                EnemySkeletonStats enemSkeletonStats = enemy.GetComponent<EnemySkeletonStats>();
                 if (enemSkeletonStats != null) //If the enemy have the script
                 {
                     enemSkeletonStats.TakeDamage(cs.playerMeleeDamage * 1.5f);
+
                     if (enemSkeletonStats.isDead == true)
                     {
                         cs.AddExp(enemSkeletonStats.amountExp);
                     }
+
+                }
+            }
+
+            if (enemy.tag == "Boss")
+            {
+                EnemyBossStats enemBossStats = enemy.GetComponent<EnemyBossStats>();
+                if (enemBossStats != null) //If the enemy have the script
+                {
+                    enemBossStats.TakeDamage(cs.playerMeleeDamage * 1.5f);
+
+                    if (enemBossStats.isDead == true)
+                    {
+                        cs.AddExp(enemBossStats.amountExp);
+                    }
+
                 }
             }
         }

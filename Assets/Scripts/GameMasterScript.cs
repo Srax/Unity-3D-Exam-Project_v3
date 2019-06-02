@@ -24,6 +24,7 @@ public class GameMasterScript : MonoBehaviour
         mainCanvas.SetActive(true);
         Time.timeScale = 1f;
         PlayerPrefs.SetInt("questIndex", 0);
+        PlayerPrefs.SetInt("havePortalKey", 0);
     }
 
     // Update is called once per frame

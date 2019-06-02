@@ -704,7 +704,7 @@ Animator:
   m_GameObject: {fileID: 707393612}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a58154c350c4ccf47a6cdad03a8dca1a, type: 3}
-  m_Controller: {fileID: 9100000, guid: 6e092ad3d6b50a14bac692ea833c646a, type: 2}
+  m_Controller: {fileID: 9100000, guid: f1fe39b51c5f91b42b4599650282df7b, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -734,12 +734,12 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707393612}
   m_Enabled: 1
-  m_AgentTypeID: -334000983
+  m_AgentTypeID: -1372625422
   m_Radius: 0.5
   m_Speed: 2
-  m_Acceleration: 8
+  m_Acceleration: 99
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 999
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -777,10 +777,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84e26e9f2a8cda145858a0d597c7c550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 0}
   currentEnemyHealth: 100
   attackDamage: 10
-  amountExp: 0
+  amountExp: 10
   healthBar: {fileID: 3153351500118364324}
+  healthBarCanvas: {fileID: 2168809648887853193}
   isDead: 0
   canControl: 1
 --- !u!1 &710276892
@@ -1789,6 +1791,7 @@ GameObject:
   - component: {fileID: 1578657275860114529}
   - component: {fileID: 3748332336236675647}
   - component: {fileID: 2946878703793824440}
+  - component: {fileID: 1596126258}
   m_Layer: 0
   m_Name: HealthBarCanvas
   m_TagString: Untagged
@@ -1876,6 +1879,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1596126258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2168809648887853193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed463c5ee7a9a3b4faa809467acfa3e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5575068036306785273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,7 +1957,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1e3ce3c14957276479fe2a63214a360d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dea006027bd09f84bb57786af7be5760, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2016,7 +2031,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 1e3ce3c14957276479fe2a63214a360d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dea006027bd09f84bb57786af7be5760, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1

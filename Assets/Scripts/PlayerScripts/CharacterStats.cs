@@ -132,6 +132,8 @@ public class CharacterStats : MonoBehaviour
         currentPlayerHealth = maxPlayerHealth; //Give the player full health
         currentPlayerMana = maxPlayerMana; //Give the player full mana
 
+        levelUpParticles.Play(); //Play levelUp animation
+
         //Update UI Lvl with new level.
         levelText.SetText(level.ToString());
 

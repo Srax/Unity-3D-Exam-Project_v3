@@ -49,7 +49,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
@@ -4568,7 +4568,7 @@ ParticleSystem:
 --- !u!199 &7669338261094613164
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 2
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -5853,7 +5853,6 @@ GameObject:
   - component: {fileID: 3211814263523652668}
   - component: {fileID: 3211814263523652659}
   - component: {fileID: 3211814263523652658}
-  - component: {fileID: 3211814263523652657}
   m_Layer: 0
   m_Name: Player_Valkyrie
   m_TagString: Player
@@ -5947,11 +5946,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentPlayerHealth: 100
-  currentPlayerMana: 100
+  currentPlayerMana: 400
   maxPlayerHealth: 300
   maxPlayerMana: 100
   playerMeleeDamage: 25
   playerSpellDamage: 20
+  levelUpParticles: {fileID: 4454530012050871766}
   exp: 0
   level: 1
   vitality: 1
@@ -5961,6 +5961,7 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   expBar: {fileID: 0}
   manaBar: {fileID: 0}
+  levelText: {fileID: 0}
   isDead: 0
   isControllable: 1
   enableCheats: 0
@@ -5993,26 +5994,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   focus: {fileID: 0}
+  gm: {fileID: 0}
   attack1CoolDownTimer: 0
   attack1CoolDown: 2.5
   attack1Radius: 2
-  attack1ManaCost: 20
+  attack1ManaCost: 15
   attack1UIButton: {fileID: 0}
   attack2CoolDownTimer: 0
   attack2CoolDown: 4
   attack2Radius: 4
-  attack2ManaCost: 40
+  attack2ManaCost: 25
   attack2UIButton: {fileID: 0}
   attack3CoolDownTimer: 0
   attack3CoolDown: 8
-  attack3ManaCost: 40
+  attack3ManaCost: 35
   attack3UIButton: {fileID: 0}
   healthPotionCoolDownTimer: 0
-  healthPotionCoolDown: 8
+  healthPotionCoolDown: 30
   healAmount: 100
   healthPotionUIButton: {fileID: 0}
   manaPotionCoolDownTimer: 0
-  manaPotionCoolDown: 2.5
+  manaPotionCoolDown: 20
   manaAmount: 100
   manaPotionUIButton: {fileID: 0}
   spell_FireBolt: {fileID: 561226042874334877, guid: 8deef3613c12f5f419bd1c1cd7e9f4d3,
@@ -6020,18 +6022,6 @@ MonoBehaviour:
   attack1Pos: {fileID: 6404668987335316237}
   hitObjects: []
   cam: {fileID: 0}
---- !u!114 &3211814263523652657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3211814263523652661}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b17f3054addf4a4885eb6ec39473dee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3211814263543926676
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Quest
 {
     public bool isActive;
+    public bool isComplete = false;
 
     public string title;
     public string description;
@@ -15,6 +16,7 @@ public class Quest
     public void Complete()
     {
         isActive = false;
+        isComplete = true;
         Debug.Log(title + " has been completed.");
         PlayerPrefs.SetInt("questIndex", PlayerPrefs.GetInt("questIndex") + 1); //Count up questIndex by 1 each time a quest is completed.
     }

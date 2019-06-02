@@ -40,8 +40,8 @@ public class EnergyBallSpell : MonoBehaviour
 
     void HitTarget()
     {
-        GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position + new Vector3(0,1,0), transform.rotation); //Spawn a bullet shatter effect
-       Destroy(effectIns, 2f); //Destroy bullet shatter effect after 2 seconds (length of animation)
+        GameObject effectIns = (GameObject)Instantiate(impactEffect, transform.position + new Vector3(0,1,0), transform.rotation); //Spawn a energy ball shatter effect
+        Destroy(effectIns, 2f); //Destroy energy ball shatter effect after 2 seconds (length of animation)
 
         if (explosionRadius >= 0)
         {
@@ -72,6 +72,19 @@ public class EnergyBallSpell : MonoBehaviour
                 }
             }
 
+            if (collider.tag == "Boss")
+            {
+                EnemyBossStats enemBossStats = collider.GetComponent<EnemyBossStats>();
+                if (enemBossStats != null) //If the enemy have the script
+                {
+                    enemBossStats.TakeDamage(player.GetComponent<CharacterStats>().playerSpellDamage * 1);
+                    if (enemBossStats.isDead == true)
+                    {
+                        //player.GetComponent<CharacterStats>().UpdateExp(10f);
+                    }
+                }
+            }
+
             if (collider.tag == "DestructableObject")
             {
                 ObjectStats objScript = collider.GetComponent<ObjectStats>();
@@ -80,16 +93,6 @@ public class EnergyBallSpell : MonoBehaviour
                     objScript.TakeDamage(spellDamage); //Damage the destructable object
                 }
             }
-        }
-    }
-
-    void Damage(Transform enemy)
-    {
-        EnemyStats es = enemy.GetComponent<EnemyStats>();
-
-        if (es != null)
-        {
-            es.TakeDamage(spellDamage);
         }
     }
 

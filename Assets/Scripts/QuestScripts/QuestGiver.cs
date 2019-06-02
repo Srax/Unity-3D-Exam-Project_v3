@@ -5,9 +5,14 @@ using UnityEngine.UI;
 
 public class QuestGiver : MonoBehaviour
 {
+    [Header("Objects")]
     public GameMasterScript gm;
-
+    public GameObject player;
+    public GameObject boss;
+    public GameObject chest;
     public GameObject questWindow;
+
+    [Header("UI")]
     public Text titleText;
     public Text descriptionText;
     public Text expText;
@@ -18,6 +23,23 @@ public class QuestGiver : MonoBehaviour
 
     private void Update()
     {
+        //If the first quest is complete, spawn the boss.
+        if(questList[0].isComplete == true)
+        {
+            if(boss && boss.activeSelf == false)
+            {
+                boss.SetActive(true);
+            }
+        }
+
+        if(questList[0].isComplete && questList[1].isComplete)
+        {
+            if(chest && chest.activeSelf == false)
+            {
+                chest.SetActive(true);
+            }
+        }
+
         switch(PlayerPrefs.GetInt("questIndex"))
         {
 
